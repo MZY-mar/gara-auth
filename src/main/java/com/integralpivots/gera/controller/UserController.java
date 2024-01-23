@@ -1,6 +1,7 @@
 package com.integralpivots.gera.controller;
 
 
+import com.integralpivots.gera.GeraRes;
 import com.integralpivots.gera.domain.User;
 import com.integralpivots.gera.domain.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,24 +21,26 @@ public class UserController {
     }
 
     @PostMapping("/user")
-    public User createUser(@RequestBody User user){
-        return userRepo.saveUser(user);
+    public GeraRes createUser(@RequestBody User user){
+        return GeraRes.ok().data("user", userRepo.saveUser(user));
     }
 
     @GetMapping("/user/{userId}")
-    public User findUserById(@PathVariable("userId") String id){
-        return userRepo.findUserById(Long.valueOf(id));
+    public GeraRes findUserById(@PathVariable("userId") String id){
+        return GeraRes.ok().data("user",
+                userRepo.findUserById(Long.valueOf(id)));
     }
 
     @GetMapping("/user/email/{email}")
-    public  User findUserByEmail(@PathVariable("email") String email){
-        return userRepo.findUserByEmail(email);
+    public GeraRes findUserByEmail(@PathVariable("email") String email){
+       return GeraRes.ok().data("user",userRepo.findUserByEmail(email));
     }
     //user id and alias not need to wrap in to user object
     @PutMapping("/user/{userId}/alias/{alias}")
-    public User updateUserAlias(@PathVariable("userId") String userid,
-                                @PathVariable("alias") String alias){
-        return  userRepo.updateAlias(Long.valueOf(userid),alias);
+    public GeraRes updateUserAlias(@PathVariable("userId") String userId,
+                                   @PathVariable("alias") String alias){
+       User user = userRepo.updateAlias(Long.valueOf(userId),alias);
+       return GeraRes.ok().data("user",user);
     }
 
 
