@@ -1,13 +1,10 @@
 package com.integralpivots.gera.controller;
-
-
 import com.integralpivots.gera.GeraRes;
+import com.integralpivots.gera.RedisService;
 import com.integralpivots.gera.domain.User;
 import com.integralpivots.gera.domain.UserRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Optional;
 
 @RequestMapping("/auth")
 @RestController
@@ -15,6 +12,15 @@ public class UserController {
 
     @Autowired
     UserRepo userRepo;
+
+    @Autowired
+    RedisService redisService;
+
+
+    @PostMapping("/user/register")
+    public GeraRes registerValidateUser(){
+
+    }
     @GetMapping("/info")
     public String getServiceInfo(){
         return "Welcome to Gera Auth Service";
